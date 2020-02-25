@@ -1,0 +1,59 @@
+
+<h2 class="first">Personales</h2>
+<router-outlet></router-outlet>
+<p-table #dt [columns]="cols" [value]="personales" [paginator]="true" [rows]="6">
+    <ng-template pTemplate="caption">
+        <div style="text-align: right;">
+            <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+            <input type="text" pInputText size="50" placeholder="Filtro Global"
+                (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="header" let-columns>
+
+
+        <tr>
+            <th *ngFor="let col of columns">
+                {{col.header}}
+            </th>
+            <th>Acciones</th>
+        </tr>
+        <tr>
+            <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                <input *ngSwitchCase="'nombres'" pInputText type="text"
+                    (input)="dt.filter($event.target.value, col.field, 'contains')">
+                <input *ngSwitchCase="'apellidos'" pInputText type="text"
+                    (input)="dt.filter($event.target.value, col.field, 'contains')">
+                <input *ngSwitchCase="'cargo.nombre'" pInputText type="text"
+                    (input)="dt.filter($event.target.value, col.field, 'contains')">
+            </th>
+            <th> </th>
+        </tr>
+
+
+
+    </ng-template>
+    <ng-template pTemplate="body" let-perso let-columns="columns">
+        <tr [pSelectableRow]="perso">
+
+
+            <td style="text-align: center;">{{perso.idPersonal}}</td>
+            <td>{{perso.nombres}}</td>
+            <td>{{perso.apellidos}}</td>
+            <td>{{perso.fechaNac | date:'dd-MM-yyyy'}}</td>
+            <td>{{perso.dni}}</td>
+            <td>{{perso.genero}}</td>
+            <td>{{perso.cargo.nombre}}</td>
+            <td style="text-align: center;">
+                <button pButton type="button" class="ui-button-warning" icon="pi pi-pencil"
+                    style="margin-right: 0.5em" [routerLink]="['/personal/edicion', perso.idPersonal ]"></button>
+                <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+<div style="text-align: right;margin-top: 1rem">
+    <button style="font-size: 1em;" pButton type="button" label="Nuevo" 
+    class="ui-button-rounded ui-button-info" icon="pi pi-file-o" iconPos="right" routerLink='/personal/nuevo'></button>
+</div>
