@@ -1,0 +1,16 @@
+.labelInput{
+    color: #FFF;
+}
+.container-meform{
+    background-color: #3f3f3f;
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 40%;
+    margin:0 auto;
+  }
+
+  @media(max-width:876px){
+   .container-meform{
+    max-width: 100%;
+   }
+  }

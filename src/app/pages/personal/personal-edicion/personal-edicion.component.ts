@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SelectItem } from 'primeng/api';
 import { CargoService } from 'src/app/_service/cargo.service';
 import { Cargo } from 'src/app/_model/cargo';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PersonalService } from 'src/app/_service/personal.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Personal } from 'src/app/_model/personal';
@@ -36,6 +36,7 @@ export class PersonalEdicionComponent implements OnInit {
       { label: 'Masculino', value: 'M' },
       { label: 'Femenino', value: 'F' }
     ];
+
   }
 
   ngOnInit() {
@@ -53,20 +54,21 @@ export class PersonalEdicionComponent implements OnInit {
     }
 
 
-    //Cargando data de Cargos:
+    //Cargando data de Cargos: Combobox
     this.cargoService.listar().subscribe(data => {
       this.cargo = data;
     });
 
     this.form = new FormGroup({
       'id': new FormControl(0),
-      'nombres': new FormControl(''),
-      'apellidos': new FormControl(''),
-      'celular': new FormControl(''),
-      'fechaNac': new FormControl(''),
-      'nroDni': new FormControl(''),
-      'genero': new FormControl(''),
-      'cargo': new FormControl('')
+      'nombres': new FormControl('',Validators.required),
+      'apellidos': new FormControl('',Validators.required),
+      'celular': new FormControl('',Validators.compose([Validators.required, Validators.minLength(9),Validators.maxLength(9)])),
+      'fechaNac': new FormControl('',Validators.required),
+      'nroDni': new FormControl('',Validators.compose([Validators.required, Validators.minLength(8),Validators.maxLength(8)])),
+      'genero': new FormControl('',Validators.required),
+      'cargo': new FormControl('',Validators.required),
+      'modalidad': new FormControl('C')
 
     });
 
@@ -95,7 +97,8 @@ export class PersonalEdicionComponent implements OnInit {
           'fechaNac': new FormControl(new Date(data.fechaNac)),
           'nroDni': new FormControl(data.dni),
           'genero': new FormControl(data.genero),
-          'cargo': new FormControl(data.cargo)
+          'cargo': new FormControl(data.cargo),
+          'modalidad': new FormControl(data.modalidad),
         });
         this.selectedCargo.idCargo = data.cargo.idCargo;
         
@@ -111,17 +114,18 @@ export class PersonalEdicionComponent implements OnInit {
     this.personal.celular = this.form.value['celular'];
     this.personal.dni = this.form.value['nroDni'];
     this.personal.genero = this.form.value['genero'];
+    this.personal.modalidad = this.form.value['modalidad'];
     
     let cargo = new Cargo();
     cargo.idCargo = this.selectedCargo.idCargo;
     this.personal.cargo = cargo;
     this.personal.fechaNac = moment(this.form.value['fechaNac']).format('YYYY-MM-DD');//localISOTime;
 
-    console.log(this.personal.cargo);
     if(this.edicion){
       this.personalService.modificar(this.personal).subscribe( () =>{
         this.personalService.listar().subscribe(data =>{
           this.personalService.personalCambio.next(data);
+          this.personalService.mensajeCambio.next('Se Modifico correctamente..');
         });
       });
 
@@ -130,6 +134,7 @@ export class PersonalEdicionComponent implements OnInit {
       this.personalService.registrar(this.personal).subscribe(() =>{
         this.personalService.listar().subscribe(data =>{
           this.personalService.personalCambio.next(data);
+          this.personalService.mensajeCambio.next('Se Registro correctamente..');
         });
       });
     }

@@ -6,6 +6,13 @@ import {InputTextModule} from 'primeng/inputtext';
 import {DropdownModule} from 'primeng/dropdown';
 import {InputMaskModule} from 'primeng/inputmask';
 import {CalendarModule} from 'primeng/calendar';
+import {ToastModule} from 'primeng/toast';
+import {ToolbarModule} from 'primeng/toolbar';
+
+import {MenuModule} from 'primeng/menu';
+import {MenuItem} from 'primeng/api';
+import {SidebarModule} from 'primeng/sidebar';
+import {KeyFilterModule} from 'primeng/keyfilter';
 
 @NgModule({
   declarations: [],
@@ -16,7 +23,14 @@ import {CalendarModule} from 'primeng/calendar';
     InputTextModule,
     DropdownModule,
     InputMaskModule,
-    CalendarModule
+    CalendarModule,
+    ToastModule,
+    ToolbarModule,
+    MenuModule,
+    //MenuItem
+    SidebarModule,
+    KeyFilterModule
+
   ],
   exports:[
     TableModule,
@@ -24,7 +38,12 @@ import {CalendarModule} from 'primeng/calendar';
     InputTextModule,
     DropdownModule,
     InputMaskModule,
-    CalendarModule
+    CalendarModule,
+    ToastModule,
+    ToolbarModule,
+    MenuModule,
+    SidebarModule,
+    KeyFilterModule
   ]
 })
 export class PrimengModule { }

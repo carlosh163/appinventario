@@ -1,7 +1,8 @@
 <p-toast [style]="{marginTop: '80px'}"></p-toast>
-<h2 class="first">Personales</h2>
+<h2 class="first">Cargos</h2>
 <router-outlet></router-outlet>
-<p-table #dt [columns]="cols" [value]="personales" [paginator]="true" [rows]="6">
+<p-table #dt [columns]="cols" [value]="cargos" [paginator]="true" [rows]="6" 
+[style]="{'max-width': '70%','display': 'block','margin': '0 auto'}">
     <ng-template pTemplate="caption">
         <div style="text-align: right;">
             <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
@@ -21,11 +22,9 @@
         </tr>
         <tr>
             <th *ngFor="let col of columns" [ngSwitch]="col.field">
-                <input *ngSwitchCase="'nombres'" pInputText type="text" size="10"
+                <input *ngSwitchCase="'nombre'" pInputText type="text" size="10"
                     (input)="dt.filter($event.target.value, col.field, 'contains')">
-                <input *ngSwitchCase="'apellidos'" pInputText type="text" size="10"
-                    (input)="dt.filter($event.target.value, col.field, 'contains')">
-                <input *ngSwitchCase="'cargo.nombre'" pInputText type="text" size="10"
+                <input *ngSwitchCase="'estado'" pInputText type="text" size="10"
                     (input)="dt.filter($event.target.value, col.field, 'contains')">
             </th>
             <th> </th>
@@ -34,30 +33,26 @@
 
 
     </ng-template>
-    <ng-template pTemplate="body" let-perso let-columns="columns">
+    <ng-template pTemplate="body" let-carg let-columns="columns">
         
-        <tr [pSelectableRow]="perso">
+        <tr [pSelectableRow]="carg">
 
 
-            <td style="text-align: center;">{{perso.idPersonal}}</td>
-            <td>{{perso.nombres}}</td>
-            <td>{{perso.apellidos}}</td>
-            <td>{{perso.fechaNac | date:'dd-MM-yyyy'}}</td>
-            <td>{{perso.dni}}</td>
-            <td>{{perso.genero}}</td>
-            <td>{{perso.cargo.nombre}}</td>
+            <td style="text-align: center;">{{carg.idCargo}}</td>
+            <td>{{carg.nombre}}</td>
+            <td>{{carg.estado}}</td>
             <td style="text-align: center;">
                 <button pButton type="button" class="ui-button-warning" icon="pi pi-pencil"
-                    style="margin-right: 0.5em" [routerLink]="['/personal/edicion', perso.idPersonal ]"></button>
+                    style="margin-right: 0.5em" [routerLink]="['/cargo/edicion', carg.idCargo ]"></button>
                 <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"
-                (click)="eliminar(perso.idPersonal)"></button>
+                (click)="eliminar(carg.idCargo)"></button>
             </td>
         </tr>
     </ng-template>
 </p-table>
-<div style="text-align: right;margin-top: 1rem">
+<div style="text-align: right;margin-top: 1rem;margin-right: 15rem;">
     <button style="font-size: 1em;" pButton type="button" label="Nuevo" 
-    class="ui-button-rounded ui-button-info" icon="pi pi-file-o" iconPos="right" routerLink='/personal/nuevo'></button>
+    class="ui-button-rounded ui-button-info" icon="pi pi-file-o" iconPos="right" routerLink='/cargo/nuevo'></button>
     
     
 </div>

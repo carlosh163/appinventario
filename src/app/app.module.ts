@@ -9,12 +9,18 @@ import { PersonalEdicionComponent } from './pages/personal/personal-edicion/pers
 import { PersonalComponent } from './pages/personal/personal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CargoComponent } from './pages/cargo/cargo.component';
+import { CargoEdicionComponent } from './pages/cargo/cargo-edicion/cargo-edicion.component';
+import { CategoriaComponent } from './pages/categoria/categoria.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PersonalComponent,
-    PersonalEdicionComponent
+    PersonalEdicionComponent,
+    CargoComponent,
+    CargoEdicionComponent,
+    CategoriaComponent
     
   ],
   imports: [

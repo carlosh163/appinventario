@@ -9,6 +9,7 @@ import { Subject } from 'rxjs';
 export class PersonalService {
 
   personalCambio = new Subject<Personal[]>();
+  mensajeCambio = new Subject<string>();
   url: string = `${environment.HOST}/personales`;
   constructor(private http:HttpClient) { }
 

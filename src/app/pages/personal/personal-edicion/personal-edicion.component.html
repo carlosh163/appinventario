@@ -3,48 +3,51 @@
     <div class="ui-g ui-fluid container-meform">
         <div class="ui-g-12 ui-md-2" [hidden]="true">
             <span class="ui-float-label">
-                <input id="float-inputId" type="text" size="5" pInputText formControlName="id" required>
+                <input id="float-inputId" type="text" size="5" pInputText formControlName="id">
                 <label for="float-inputId" class="labelInput">ID</label>
             </span>
         </div>
         <div class="ui-g-12 ui-md-4">
             <span class="ui-float-label">
-                <input id="float-inputN" type="text" size="30" pInputText formControlName="nombres" required>
+                <input id="float-inputN" type="text" size="30" pInputText formControlName="nombres">
                 <label for="float-inputN" class="labelInput" required>Nombres</label>
             </span>
         </div>
         
         <div class="ui-g-12 ui-md-4">
             <span class="ui-float-label">
-                <input id="float-inputA" type="text" size="30" pInputText formControlName="apellidos" required>
+                <input id="float-inputA" type="text" size="30" pInputText formControlName="apellidos">
                 <label for="float-inputA" class="labelInput">Apellidos</label>
             </span>
         </div>
         <div class="ui-g-12 ui-md-4">
             <span class="ui-float-label">
-                <input id="float-inputC" type="text" size="30" pInputText formControlName="celular" required>
+                <input id="float-inputC" type="text" size="30" pInputText pKeyFilter="num" formControlName="celular">
                 <label for="float-inputC" class="labelInput">Celular</label>
             </span>
         </div>
         <div class="ui-g-12 ui-md-4">
             <span class="ui-float-label">
-                <p-calendar [(ngModel)]="value" [locale]="es" dateFormat="dd/mm/yy" [showIcon]="true" formControlName="fechaNac" required> </p-calendar>
+                <p-calendar [(ngModel)]="value" [locale]="es" dateFormat="dd/mm/yy" [showIcon]="true" formControlName="fechaNac"> </p-calendar>
                 <label for="float-input" class="labelInput">Fecha Nacimiento</label>
             </span>
         </div>
         <div class="ui-g-12 ui-md-2">
             <span class="ui-float-label">
                 <!--<p-inputMask id="float-inputNr" mask="999-999-999" formControlName="nroDni" required></p-inputMask>-->
-                <input id="float-inputNr" type="text" size="30" pInputText formControlName="nroDni" required>
-                <label for="float-inputNr" class="labelInput" required>DNI</label>
+                <input id="float-inputNr" type="text" size="30" pInputText pKeyFilter="num" formControlName="nroDni">
+                <label for="float-inputNr" class="labelInput">DNI</label>
             </span>
         </div>
         <div class="ui-g-12 ui-md-2">
-            <p-dropdown [options]="genero" formControlName="genero" required></p-dropdown>
+            <p-dropdown [options]="genero" formControlName="genero"></p-dropdown>
+        </div>
+        <div class="ui-g-12 ui-md-2" [hidden]="true">
+            <input id="float-inputs" type="text" size="2" pInputText formControlName="modalidad">
         </div>
         <div class="ui-g-12 ui-md-4">
             <p-dropdown [options]="cargo" optionLabel="nombre" [(ngModel)]="selectedCargo"
-            placeholder="Seleccione un Cargo" formControlName="cargo" required></p-dropdown>
+            placeholder="Seleccione un Cargo" formControlName="cargo"></p-dropdown>
         </div>
     </div>
     <div style="text-align: center;margin: 0.2rem 0 0.2rem 0;">
