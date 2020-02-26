@@ -22,7 +22,7 @@
         </div>
         <div class="ui-g-12 ui-md-4">
             <span class="ui-float-label">
-                <p-inputMask id="float-inputC" mask="999-999-999" formControlName="celular" required></p-inputMask>
+                <input id="float-inputC" type="text" size="30" pInputText formControlName="celular" required>
                 <label for="float-inputC" class="labelInput">Celular</label>
             </span>
         </div>
@@ -34,6 +34,7 @@
         </div>
         <div class="ui-g-12 ui-md-2">
             <span class="ui-float-label">
+                <!--<p-inputMask id="float-inputNr" mask="999-999-999" formControlName="nroDni" required></p-inputMask>-->
                 <input id="float-inputNr" type="text" size="30" pInputText formControlName="nroDni" required>
                 <label for="float-inputNr" class="labelInput" required>DNI</label>
             </span>
@@ -42,7 +43,8 @@
             <p-dropdown [options]="genero" formControlName="genero" required></p-dropdown>
         </div>
         <div class="ui-g-12 ui-md-4">
-            <p-dropdown [options]="cargo" optionLabel="nombre" placeholder="Seleccione un Cargo" formControlName="cargo" required></p-dropdown>
+            <p-dropdown [options]="cargo" optionLabel="nombre" [(ngModel)]="selectedCargo"
+            placeholder="Seleccione un Cargo" formControlName="cargo" required></p-dropdown>
         </div>
     </div>
     <div style="text-align: center;margin: 0.2rem 0 0.2rem 0;">

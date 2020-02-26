@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Personal } from '../_model/personal';
+import { Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class PersonalService {
 
+  personalCambio = new Subject<Personal[]>();
   url: string = `${environment.HOST}/personales`;
   constructor(private http:HttpClient) { }
 

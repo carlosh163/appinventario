@@ -27,6 +27,10 @@ export class PersonalComponent implements OnInit {
       { field: 'cargo.nombre', header: 'Cargo' },
     ];
 
+    this.personalService.personalCambio.subscribe( data =>{
+      this.personales = data;
+    });
+
 
 
     this.personalService.listar().subscribe(data => {
