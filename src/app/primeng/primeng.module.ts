@@ -13,6 +13,8 @@ import {MenuModule} from 'primeng/menu';
 import {MenuItem} from 'primeng/api';
 import {SidebarModule} from 'primeng/sidebar';
 import {KeyFilterModule} from 'primeng/keyfilter';
+import {DialogModule} from 'primeng/dialog';
+import {DynamicDialogModule} from 'primeng/dynamicdialog';
 
 @NgModule({
   declarations: [],
@@ -29,7 +31,9 @@ import {KeyFilterModule} from 'primeng/keyfilter';
     MenuModule,
     //MenuItem
     SidebarModule,
-    KeyFilterModule
+    KeyFilterModule,
+    DialogModule,
+    DynamicDialogModule
 
   ],
   exports:[
@@ -43,7 +47,9 @@ import {KeyFilterModule} from 'primeng/keyfilter';
     ToolbarModule,
     MenuModule,
     SidebarModule,
-    KeyFilterModule
+    KeyFilterModule,
+    DialogModule,
+    DynamicDialogModule
   ]
 })
 export class PrimengModule { }

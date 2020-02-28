@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CargoComponent } from './pages/cargo/cargo.component';
 import { CargoEdicionComponent } from './pages/cargo/cargo-edicion/cargo-edicion.component';
 import { CategoriaComponent } from './pages/categoria/categoria.component';
+import { CategoriaDialogoComponent } from './pages/categoria/categoria-dialogo/categoria-dialogo.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { CategoriaComponent } from './pages/categoria/categoria.component';
     PersonalEdicionComponent,
     CargoComponent,
     CargoEdicionComponent,
-    CategoriaComponent
+    CategoriaComponent,
+    CategoriaDialogoComponent
     
   ],
   imports: [
