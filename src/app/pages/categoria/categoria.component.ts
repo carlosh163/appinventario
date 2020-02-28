@@ -58,12 +58,13 @@ export class CategoriaComponent implements OnInit {
 
 
 show(cate?: Categoria) {
+  let cateS = cate != null ? cate : new Categoria();
   const ref = this.dialogService.open(CategoriaDialogoComponent, {
       header: 'Categoria',
       width: '30%',
       contentStyle: {"max-height": "350px", "overflow": "auto"},
       style:{"background":"green","display":"flex","flex-direction":"column"},
-      data: cate
+      data: cateS
   });
 
   /*ref.onClose.subscribe((car: Car) =>{

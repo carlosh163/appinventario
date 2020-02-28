@@ -44,7 +44,7 @@
             <td>{{perso.apellidos}}</td>
             <td>{{perso.fechaNac | date:'dd-MM-yyyy'}}</td>
             <td>{{perso.dni}}</td>
-            <td>{{perso.genero}}</td>
+            <td>{{ perso.genero== 'M' ? 'Masculino' : 'Femenino'}}</td>
             <td>{{perso.cargo.nombre}}</td>
             <td style="text-align: center;">
                 <button pButton type="button" class="ui-button-warning" icon="pi pi-pencil"

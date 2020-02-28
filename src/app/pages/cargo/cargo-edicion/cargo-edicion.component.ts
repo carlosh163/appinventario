@@ -70,9 +70,7 @@ export class CargoEdicionComponent implements OnInit {
     this.cargo.idCargo = this.form.value['id'];
     this.cargo.nombre = this.form.value['nombre'];
     this.cargo.estado = this.form.value['estado'];
-    console.log("ingreso..");
     if(this.edicion){
-      console.log("ingreso EDICION");
       this.cargoService.modificar(this.cargo).subscribe( () =>{
         this.cargoService.listar().subscribe(data =>{
           this.cargoService.cargoCambio.next(data);

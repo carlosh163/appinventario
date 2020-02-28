@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CargoService } from 'src/app/_service/cargo.service';
 import { Cargo } from 'src/app/_model/cargo';
 import { MessageService } from 'primeng/api';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-cargo',
@@ -13,7 +14,7 @@ export class CargoComponent implements OnInit {
 
   cargos: Cargo[];
   cols: any[];
-  constructor(private cargoService: CargoService,private messageService: MessageService) { }
+  constructor(private cargoService: CargoService,private messageService: MessageService,public route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.cols = [
