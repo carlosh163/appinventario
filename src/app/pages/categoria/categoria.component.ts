@@ -9,14 +9,14 @@ import { CategoriaDialogoComponent } from './categoria-dialogo/categoria-dialogo
   selector: 'app-categoria',
   templateUrl: './categoria.component.html',
   styleUrls: ['./categoria.component.css'],
-  providers: [MessageService,DialogService]
+  providers: [MessageService, DialogService]
 })
 export class CategoriaComponent implements OnInit {
   categorias: Categoria[];
   cols: any[];
 
 
-  constructor(private categoriaService: CategoriaService,public dialogService: DialogService,public messageService: MessageService) { }
+  constructor(private categoriaService: CategoriaService, public dialogService: DialogService, public messageService: MessageService) { }
 
   ngOnInit(): void {
 
@@ -26,24 +26,24 @@ export class CategoriaComponent implements OnInit {
       { field: 'estado', header: 'Estado' }
     ];
 
-    this.categoriaService.categoriaCambio.subscribe( data =>{
+    this.categoriaService.categoriaCambio.subscribe(data => {
       this.categorias = data;
     });
 
-    this.categoriaService.mensajeCambio.subscribe(data =>{
+    this.categoriaService.mensajeCambio.subscribe(data => {
       this.mensaje(data);
 
     });
 
-    this.categoriaService.listar().subscribe(data=>{
+    this.categoriaService.listar().subscribe(data => {
       this.categorias = data;
 
     });
   }
 
-  eliminar(idCargo: number){
-    this.categoriaService.eliminar(idCargo).subscribe( () =>{
-      this.categoriaService.listar().subscribe(data =>{
+  eliminar(idCargo: number) {
+    this.categoriaService.eliminar(idCargo).subscribe(() => {
+      this.categoriaService.listar().subscribe(data => {
         this.categoriaService.categoriaCambio.next(data);
         this.categoriaService.mensajeCambio.next('Se Elimino correctamente..');
       });
@@ -52,27 +52,27 @@ export class CategoriaComponent implements OnInit {
   }
 
   mensaje(detalle: string) {
-    this.messageService.add({severity:'success', summary: 'Acción existosa', detail:detalle});
-}
+    this.messageService.add({ severity: 'success', summary: 'Acción existosa', detail: detalle });
+  }
 
 
 
-show(cate?: Categoria) {
-  let cateS = cate != null ? cate : new Categoria();
-  const ref = this.dialogService.open(CategoriaDialogoComponent, {
+  show(cate?: Categoria) {
+    let cateS = cate != null ? cate : new Categoria();
+    const ref = this.dialogService.open(CategoriaDialogoComponent, {
       header: 'Categoria',
       width: '30%',
-      contentStyle: {"max-height": "350px", "overflow": "auto"},
-      style:{"background":"green","display":"flex","flex-direction":"column"},
+      contentStyle: { "max-height": "350px", "overflow": "auto" },
+      style: { "background": "green", "display": "flex", "flex-direction": "column" },
       data: cateS
-  });
+    });
 
-  /*ref.onClose.subscribe((car: Car) =>{
-      if (car) {
-          this.messageService.add({severity:'info', summary: 'Car Selected', detail:'Vin:' + car.vin});
-      }
-  });*/
-}
+    /*ref.onClose.subscribe((car: Car) =>{
+        if (car) {
+            this.messageService.add({severity:'info', summary: 'Car Selected', detail:'Vin:' + car.vin});
+        }
+    });*/
+  }
 
 
 }

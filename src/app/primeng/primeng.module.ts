@@ -15,6 +15,8 @@ import {SidebarModule} from 'primeng/sidebar';
 import {KeyFilterModule} from 'primeng/keyfilter';
 import {DialogModule} from 'primeng/dialog';
 import {DynamicDialogModule} from 'primeng/dynamicdialog';
+import {AutoCompleteModule} from 'primeng/autocomplete';
+import {PanelModule} from 'primeng/panel';
 
 @NgModule({
   declarations: [],
@@ -33,7 +35,9 @@ import {DynamicDialogModule} from 'primeng/dynamicdialog';
     SidebarModule,
     KeyFilterModule,
     DialogModule,
-    DynamicDialogModule
+    DynamicDialogModule,
+    AutoCompleteModule,
+    PanelModule
 
   ],
   exports:[
@@ -49,7 +53,9 @@ import {DynamicDialogModule} from 'primeng/dynamicdialog';
     SidebarModule,
     KeyFilterModule,
     DialogModule,
-    DynamicDialogModule
+    DynamicDialogModule,
+    AutoCompleteModule,
+    PanelModule
   ]
 })
 export class PrimengModule { }

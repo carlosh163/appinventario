@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PersonalService } from 'src/app/_service/personal.service';
 import { Personal } from 'src/app/_model/personal';
 import { MessageService } from 'primeng/api';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-personal',
@@ -15,7 +16,7 @@ export class PersonalComponent implements OnInit {
   personales: Personal[];
   cols: any[];
 
-  constructor(private personalService: PersonalService,private messageService: MessageService) { }
+  constructor(private personalService: PersonalService,private messageService: MessageService,public route: ActivatedRoute) { }
 
   ngOnInit() {
 

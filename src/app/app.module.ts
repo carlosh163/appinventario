@@ -13,6 +13,11 @@ import { CargoComponent } from './pages/cargo/cargo.component';
 import { CargoEdicionComponent } from './pages/cargo/cargo-edicion/cargo-edicion.component';
 import { CategoriaComponent } from './pages/categoria/categoria.component';
 import { CategoriaDialogoComponent } from './pages/categoria/categoria-dialogo/categoria-dialogo.component';
+import { BienComponent } from './pages/bien/bien.component';
+import { MarcaComponent } from './pages/marca/marca.component';
+import { MarcaDialogoComponent } from './pages/marca/marca-dialogo/marca-dialogo.component';
+import { CargoDialogoComponent } from './pages/cargo/cargo-dialogo/cargo-dialogo.component';
+import { BienEdicionComponent } from './pages/bien/bien-edicion/bien-edicion.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +27,12 @@ import { CategoriaDialogoComponent } from './pages/categoria/categoria-dialogo/c
     CargoComponent,
     CargoEdicionComponent,
     CategoriaComponent,
-    CategoriaDialogoComponent
+    CategoriaDialogoComponent,
+    BienComponent,
+    MarcaComponent,
+    MarcaDialogoComponent,
+    CargoDialogoComponent,
+    BienEdicionComponent
     
   ],
   imports: [

@@ -5,6 +5,9 @@ import { PersonalEdicionComponent } from './pages/personal/personal-edicion/pers
 import { CargoComponent } from './pages/cargo/cargo.component';
 import { CargoEdicionComponent } from './pages/cargo/cargo-edicion/cargo-edicion.component';
 import { CategoriaComponent } from './pages/categoria/categoria.component';
+import { BienComponent } from './pages/bien/bien.component';
+import { MarcaComponent } from './pages/marca/marca.component';
+import { BienEdicionComponent } from './pages/bien/bien-edicion/bien-edicion.component';
 
 
 const routes: Routes = [
@@ -24,6 +27,15 @@ const routes: Routes = [
   },
   {
     path:'categoria',component:CategoriaComponent
+  },
+  {
+    path:'marca',component:MarcaComponent
+  },
+  {
+    path:'bien',component:BienComponent, children:[
+      { path: 'nuevo', component: BienEdicionComponent },
+      { path: 'edicion/:id', component: BienEdicionComponent }
+    ]
   }
 ];
 

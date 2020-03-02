@@ -1,8 +1,8 @@
 <p-toast [style]="{marginTop: '80px'}"></p-toast>
 <div class="paddingHijo">
-    <h2 class="first">Categorias</h2>
+    <h2 class="first">Marcas</h2>
 
-    <p-table #dt [columns]="cols" [value]="categorias" [paginator]="true" [rows]="6"
+    <p-table #dt [columns]="cols" [value]="marcas" [paginator]="true" [rows]="6"
         [style]="{'max-width': '70%','display': 'block','margin': '0 auto'}">
         <ng-template pTemplate="caption">
             <div style="text-align: right;">
@@ -34,19 +34,19 @@
 
 
         </ng-template>
-        <ng-template pTemplate="body" let-cate let-columns="columns">
+        <ng-template pTemplate="body" let-marc let-columns="columns">
 
-            <tr [pSelectableRow]="cate">
+            <tr [pSelectableRow]="marc">
 
 
-                <td style="text-align: center;">{{cate.idCategoria}}</td>
-                <td>{{cate.nombre}}</td>
-                <td>{{cate.estado =='A' ? 'ACTIVO' : 'INACTIVO'}}</td>
+                <td style="text-align: center;">{{marc.idMarca}}</td>
+                <td>{{marc.nombre}}</td>
+                <td>{{marc.estado =='A' ? 'ACTIVO' : 'INACTIVO'}}</td>
                 <td style="text-align: center;">
                     <button pButton type="button" class="ui-button-warning" icon="pi pi-pencil"
-                        style="margin-right: 0.5em" (click)="show(cate)"></button>
+                        style="margin-right: 0.5em" (click)="show(marc)"></button>
                     <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"
-                        (click)="eliminar(cate.idCategoria)"></button>
+                        (click)="eliminar(marc  .idMarca)"></button>
                 </td>
             </tr>
 

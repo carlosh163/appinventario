@@ -1,0 +1,27 @@
+<h3 class="first">Ingrese los datos..</h3>
+<div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-2" [hidden]="true">
+        <span class="ui-float-label">
+            <input id="float-inputId" type="text" size="5" pInputText required>
+            <label for="float-inputId" class="labelInput">ID</label>
+        </span>
+    </div>
+    <div class="ui-g-12 ui-md-12">
+        <span class="ui-float-label">
+            <input id="float-inputN" type="text" size="30" pInputText  [(ngModel)]="carg.nombre" required>
+            <label for="float-inputN" class="labelInput" required>Nombre</label>
+        </span>
+    </div>
+    <div class="ui-g-12 ui-md-2" [hidden]="true">
+        <input id="float-inputs" type="text" size="2" pInputText>
+    </div>
+</div>
+<div style="text-align: center;margin: 0.2rem 0 0.2rem 0;">
+
+    <button pButton type="submit" label="Guardar" class="ui-button-success"
+        icon="pi pi-save" style="margin-right: 0.5rem;" (click)="operar()"></button>
+
+    <button pButton type="button" label="Cancelar" class="ui-button-danger" 
+    icon="pi pi-times"  (click)="cancelar()"></button>
+
+</div>

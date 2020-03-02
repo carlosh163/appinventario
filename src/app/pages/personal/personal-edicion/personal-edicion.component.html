@@ -1,64 +1,71 @@
 <h3 class="first">Ingrese los datos..</h3>
 <form [formGroup]="form" #frmPersonal="ngForm" (ngSubmit)="operar()">
-    <div class="ui-g ui-fluid container-meform">
-        <div class="ui-g-12 ui-md-2" [hidden]="true">
-            <span class="ui-float-label">
-                <input id="float-inputId" type="text" size="5" pInputText formControlName="id">
-                <label for="float-inputId" class="labelInput">ID</label>
-            </span>
+    <p-panel header="Datos del Nuevo Personal">
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+            <div class="ui-g-12 ui-md-2" [hidden]="true">
+                <span class="ui-float-label">
+                    <input id="float-inputId" type="text" size="5" pInputText formControlName="id">
+                    <label for="float-inputId" class="labelInput">ID</label>
+                </span>
+            </div>
+            <div class="ui-g-12 ui-md-4">
+                <span class="ui-float-label">
+                    <input id="float-inputN" type="text" size="30" pInputText formControlName="nombres">
+                    <label for="float-inputN" class="labelInput" required>Nombres</label>
+                </span>
+            </div>
+
+            <div class="ui-g-12 ui-md-4">
+                <span class="ui-float-label">
+                    <input id="float-inputA" type="text" size="30" pInputText formControlName="apellidos">
+                    <label for="float-inputA" class="labelInput">Apellidos</label>
+                </span>
+            </div>
+            <div class="ui-g-12 ui-md-4">
+                <span class="ui-float-label">
+                    <input id="float-inputC" type="text" size="30" pInputText pKeyFilter="num"
+                        formControlName="celular">
+                    <label for="float-inputC" class="labelInput">Celular</label>
+                </span>
+            </div>
+            <div class="ui-g-12 ui-md-4">
+                <span class="ui-float-label">
+                    <p-calendar [(ngModel)]="value" [locale]="es" dateFormat="dd/mm/yy" [showIcon]="true"
+                        formControlName="fechaNac"> </p-calendar>
+                    <label for="float-input" class="labelInput">Fecha Nacimiento</label>
+                </span>
+            </div>
+            <div class="ui-g-12 ui-md-2">
+                <span class="ui-float-label">
+                    <!--<p-inputMask id="float-inputNr" mask="999-999-999" formControlName="nroDni" required></p-inputMask>-->
+                    <input id="float-inputNr" type="text" size="30" pInputText pKeyFilter="num"
+                        formControlName="nroDni">
+                    <label for="float-inputNr" class="labelInput">DNI</label>
+                </span>
+            </div>
+            <div class="ui-g-12 ui-md-2">
+                <p-dropdown [options]="genero" formControlName="genero"></p-dropdown>
+            </div>
+            <div class="ui-g-12 ui-md-2" [hidden]="true">
+                <input id="float-inputs" type="text" size="2" pInputText formControlName="modalidad">
+            </div>
+            <div class="ui-g-12 ui-md-4">
+                <p-dropdown [options]="cargo" optionLabel="nombre" [(ngModel)]="selectedCargo"
+                    placeholder="Seleccione un Cargo" formControlName="cargo"></p-dropdown>
+            </div>
         </div>
-        <div class="ui-g-12 ui-md-4">
-            <span class="ui-float-label">
-                <input id="float-inputN" type="text" size="30" pInputText formControlName="nombres">
-                <label for="float-inputN" class="labelInput" required>Nombres</label>
-            </span>
-        </div>
-        
-        <div class="ui-g-12 ui-md-4">
-            <span class="ui-float-label">
-                <input id="float-inputA" type="text" size="30" pInputText formControlName="apellidos">
-                <label for="float-inputA" class="labelInput">Apellidos</label>
-            </span>
-        </div>
-        <div class="ui-g-12 ui-md-4">
-            <span class="ui-float-label">
-                <input id="float-inputC" type="text" size="30" pInputText pKeyFilter="num" formControlName="celular">
-                <label for="float-inputC" class="labelInput">Celular</label>
-            </span>
-        </div>
-        <div class="ui-g-12 ui-md-4">
-            <span class="ui-float-label">
-                <p-calendar [(ngModel)]="value" [locale]="es" dateFormat="dd/mm/yy" [showIcon]="true" formControlName="fechaNac"> </p-calendar>
-                <label for="float-input" class="labelInput">Fecha Nacimiento</label>
-            </span>
-        </div>
-        <div class="ui-g-12 ui-md-2">
-            <span class="ui-float-label">
-                <!--<p-inputMask id="float-inputNr" mask="999-999-999" formControlName="nroDni" required></p-inputMask>-->
-                <input id="float-inputNr" type="text" size="30" pInputText pKeyFilter="num" formControlName="nroDni">
-                <label for="float-inputNr" class="labelInput">DNI</label>
-            </span>
-        </div>
-        <div class="ui-g-12 ui-md-2">
-            <p-dropdown [options]="genero" formControlName="genero"></p-dropdown>
-        </div>
-        <div class="ui-g-12 ui-md-2" [hidden]="true">
-            <input id="float-inputs" type="text" size="2" pInputText formControlName="modalidad">
-        </div>
-        <div class="ui-g-12 ui-md-4">
-            <p-dropdown [options]="cargo" optionLabel="nombre" [(ngModel)]="selectedCargo"
-            placeholder="Seleccione un Cargo" formControlName="cargo"></p-dropdown>
-        </div>
-    </div>
+    </p-panel>
+
     <div style="text-align: center;margin: 0.2rem 0 0.2rem 0;">
 
         <button pButton type="submit" label="Guardar" class="ui-button-success" [disabled]="frmPersonal.invalid"
-        icon="pi pi-save" style="margin-right: 0.5rem;"></button>
+            icon="pi pi-save" style="margin-right: 0.5rem;"></button>
 
-        <button pButton type="button" label="Cancelar" class="ui-button-danger" 
-        icon="pi pi-times" routerLink='/personal'></button>
+        <button pButton type="button" label="Cancelar" class="ui-button-danger" icon="pi pi-times"
+            routerLink='/personal'></button>
 
     </div>
-    
-    
+
+
+
 </form>

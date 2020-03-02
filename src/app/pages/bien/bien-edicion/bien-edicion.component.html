@@ -1,0 +1,8 @@
+<form [formGroup]="form" (ngSubmit)="operar()">
+    <p-autoComplete [(ngModel)]="cateSelect" [suggestions]="filteredCategoriasSingle" (completeMethod)="filterCategoriaSingle($event)" field="nombre" [size]="30"
+        placeholder="Categorias (AU)" [minLength]="1" formControlName="categ"></p-autoComplete>
+    <span style="margin-left:10px">Country: {{cateSelect ? cateSelect.nombre||cateSelect : 'none'}}</span>
+    
+    <button pButton type="submit" label="Guardar" class="ui-button-success"
+            icon="pi pi-save" style="margin-right: 0.5rem;"></button>
+    </form>
