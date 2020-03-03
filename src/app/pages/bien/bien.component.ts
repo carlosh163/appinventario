@@ -16,19 +16,30 @@ export class BienComponent implements OnInit {
   bienes: Bien[];
   cols: any[];
 
+
+  displayModal: boolean;
+  bienI: Bien;
+
+  vEDefOpera: string;
+  catexBien: string;
+  marcaxBien: string;
+
+
   constructor(private bienService: BienService,private messageService: MessageService,public route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.bienI = new Bien();
 
     this.cols = [
-      { field: 'idBien', header: 'ID' },
       { field: 'codPatrimonial', header: 'Codigo Patrimonial' },
-      { field: 'codInterno', header: 'Codigo Interno' },
       { field: 'nombre', header: 'Nombre' },
-      { field: 'estadoUso', header: 'Estado de Uso' },
+      { field: 'estadoUso', header: 'Estado de Uso' }, 
       { field: 'modelo', header: 'Modelo' },
       { field: 'categoria.nombre', header: 'Categoria' },
+      { field: 'marca.nombre', header: 'Marca' }, 
       { field: 'codLectora', header: 'Cod. Barras' },
+      
+
     ];
 
     this.bienService.bienCambio.subscribe( data =>{
@@ -43,7 +54,6 @@ export class BienComponent implements OnInit {
 
 
     this.bienService.listar().subscribe(data => {
-      //console.log(data);
       this.bienes = data;
     });
     
@@ -63,6 +73,18 @@ export class BienComponent implements OnInit {
     this.messageService.add({severity:'success', summary: 'Acción existosa', detail:detalle});
 }
   
+showModalDialog(b: Bien) {
+  this.displayModal = true;
+  this.bienI = b;
+  if(String(this.bienI.estadoUso) == 'O'){
+    this.vEDefOpera = "Operativo"
 
+  }else{
+    this.vEDefOpera = "Malogrado"
+  }
+
+  this.catexBien= this.bienI.categoria.nombre;
+  this.marcaxBien= this.bienI.marca.nombre;
+}
 
 }

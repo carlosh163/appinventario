@@ -8,17 +8,12 @@
                     <label for="float-inputId" class="labelInput">ID</label>
                 </span>
             </div>
-
             <div class="ui-g-12 ui-md-4">
                 <span class="ui-float-label">
                     <input id="float-inputA" type="text" size="30" pInputText formControlName="codPatrimonal">
                     <label for="float-inputA" class="labelInput">Codigo Patrimonial</label>
                 </span>
             </div>
-
-            
-
-
             <div class="ui-g-12 ui-md-2">
                 <span class="ui-float-label">
                     <input id="float-inputNr" type="text" size="30" pInputText pKeyFilter="num"
@@ -26,7 +21,6 @@
                     <label for="float-inputNr" class="labelInput">Codigo Interno</label>
                 </span>
             </div>
-
             <div class="ui-g-12 ui-md-4">
                 <span class="ui-float-label">
                     <input id="float-inputN" type="text" size="30" pInputText formControlName="nombre">
@@ -37,21 +31,41 @@
             <div class="ui-g-12 ui-md-2">
                 <p-dropdown [options]="estadou" formControlName="estadou"></p-dropdown>
             </div>
-
-            
             <div class="ui-g-12 ui-md-4">
                 <span class="ui-float-label">
                     <input id="float-inputM" type="text" size="30" pInputText formControlName="modelo">
                     <label for="float-inputM" class="labelInput" required>Modelo</label>
                 </span>
             </div>
-            
-            <div class="ui-g-12 ui-md-2">
-                <p-autoComplete [(ngModel)]="cateSelect" [suggestions]="filteredCategoriasSingle" (completeMethod)="filterCategoriaSingle($event)" field="nombre" [size]="30"
-        placeholder="Categorias (AU)" [minLength]="1" formControlName="categ"></p-autoComplete>
+            <div class="ui-g-12 ui-md-4">
+                <span class="ui-float-label">
+                    <input id="float-inputTipo" type="text" size="30" pInputText formControlName="tipo">
+                    <label for="float-inputTipo" class="labelInput" required>Tipo</label>
+                </span>
             </div>
-            
-            
+            <div class="ui-g-12 ui-md-4">
+                <span class="ui-float-label">
+                    <input id="float-inputSerie" type="text" size="30" pInputText formControlName="serie">
+                    <label for="float-inputSerie" class="labelInput" required>Serie</label>
+                </span>
+            </div>
+
+
+
+
+            <div class="ui-g-12 ui-md-2">
+                <p-autoComplete [(ngModel)]="cateSelect" [suggestions]="filteredCategoriasSingle"
+                    (completeMethod)="filterCategoriaSingle($event)" field="nombre" [size]="30"
+                    placeholder="Categorias (AU)" [minLength]="1" formControlName="categ"></p-autoComplete>
+            </div>
+
+            <div class="ui-g-12 ui-md-2">
+                <p-autoComplete [suggestions]="filteredMarcasSingle" (completeMethod)="filterMarcaSingle($event)"
+                    field="nombre" [size]="30" placeholder="Categorias (AU)" [minLength]="1" formControlName="marcaA">
+                </p-autoComplete>
+            </div>
+
+
         </div>
     </p-panel>
 

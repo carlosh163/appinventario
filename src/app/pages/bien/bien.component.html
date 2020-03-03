@@ -29,6 +29,8 @@
                             (input)="dt.filter($event.target.value, col.field, 'contains')">
                         <input *ngSwitchCase="'categoria.nombre'" pInputText type="text" size="10"
                             (input)="dt.filter($event.target.value, col.field, 'contains')">
+                        <input *ngSwitchCase="'marca.nombre'" pInputText type="text" size="10"
+                            (input)="dt.filter($event.target.value, col.field, 'contains')">
                     </th>
                     <th> </th>
                 </tr>
@@ -41,20 +43,22 @@
                 <tr [pSelectableRow]="bie">
 
 
-                    <td style="text-align: center;">{{bie.idBien}}</td>
+
                     <td>{{bie.codPatrimonial}}</td>
-                    <td>{{bie.codInterno}}</td>
                     <td>{{bie.nombre}}</td>
                     <td>{{ bie.estadoUso== 'O' ? 'Operativo' : 'Malogrado'}}</td>
                     <td>{{bie.modelo}}</td>
                     <td>{{bie.categoria.nombre}}</td>
+                    <td>{{bie.marca.nombre}}</td>
                     <td>{{bie.codLectora}}</td>
-                    <td style="text-align: center;">
+                    <td style="display: flex;justify-content: space-around;">
+                        <button pButton type="button" class="ui-button-info" icon="pi pi-info"
+                            (click)="showModalDialog(bie)"></button>
                         <button pButton type="button" class="ui-button-warning" icon="pi pi-pencil"
-                            style="margin-right: 0.5em"
                             [routerLink]="['/bien/edicion', bie.idBien ]"></button>
                         <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"
                             (click)="eliminar(bie.idBien)"></button>
+
                     </td>
                 </tr>
             </ng-template>
@@ -66,14 +70,84 @@
 
         </div>
 
+
+        <p-dialog header="Datos Generales del Equipo" [(visible)]="displayModal" [modal]="true"
+            [style]="{width: '33vw'}" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
+
+
+            <div class="ui-grid ui-fluid" *ngIf="bienI">
+                <div class="ui-g-12" style="text-align:center">
+                    Imagen..
+                </div>
+                <div class="ui-grid-row" style="align-items: center;">
+                    <div class="ui-g-3" style="font-weight: bold;">Cod. Patrimonial:</div>
+                    <div class="ui-g-4">{{ bienI.codPatrimonial }} </div>
+
+                    <div class="ui-g-2" style="font-weight: bold;">Cod. Interno:</div>
+                    <div class="ui-g-3"> {{ bienI.codInterno }} </div>
+                </div>
+
+                <div class="ui-grid-row" style="align-items: center;">
+                    <div class="ui-g-2" style="font-weight: bold;">Nombre:</div>
+                    <div class="ui-g-5"> {{ bienI.nombre }} </div>
+
+                    <div class="ui-g-3" style="font-weight: bold;">Estado de Uso:</div>
+                    <div class="ui-g-2"> {{ vEDefOpera }}</div>
+                </div>
+
+                <div class="ui-grid-row">
+                    <div class="ui-g-2" style="font-weight: bold;">Modelo:</div>
+                    <div class="ui-g-5"> {{ bienI.modelo }} </div>
+
+                    <div class="ui-g-2" style="font-weight: bold;">Tipo:</div>
+                    <div class="ui-g-3"> {{ bienI.tipo }} </div>
+
+                </div>
+
+                <div class="ui-grid-row">
+
+                    <div class="ui-g-2" style="font-weight: bold;">Serie:</div>
+                    <div class="ui-g-5"> {{ bienI.serie }} </div>
+
+                    <div class="ui-g-3" style="font-weight: bold;">Dimensión:</div>
+                    <div class="ui-g-2"> {{ bienI.dimension }} </div>
+
+                </div>
+
+
+                <div class="ui-grid-row">
+                    <div class="ui-g-2" style="font-weight: bold;">Color:</div>
+                    <div class="ui-g-5"> {{ bienI.color }} </div>
+
+                    <div class="ui-g-2" style="font-weight: bold;">Estado:</div>
+                    <div class="ui-g-3"> {{ bienI.estado }} </div>
+                </div>
+
+
+                <div class="ui-grid-row">
+                    <div class="ui-g-3">Categoria:</div>
+                    <div class="ui-g-4"> {{ catexBien }} </div>
+    
+                    <div class="ui-g-2">Marca:</div>
+                    <div class="ui-g-3"> {{ marcaxBien }} </div>
+
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-g-5">Cod. Barras:</div>
+                    <div class="ui-g-7"> {{ bienI.codLectora }} </div>
+                </div>
+
+                <div class="ui-grid-row">
+                    <div class="ui-g-3">Observaciones:</div>
+                    <div class="ui-g-7"> {{ bienI.observaciones }} </div>
+
+                </div>
+                
+
+            </div>
+
+        </p-dialog>
+
+
     </div>
 </div>
-
-
-
-
-
-
-
-
-

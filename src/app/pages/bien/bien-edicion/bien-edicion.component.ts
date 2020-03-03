@@ -3,6 +3,9 @@ import { CategoriaService } from 'src/app/_service/categoria.service';
 import { Categoria } from 'src/app/_model/categoria';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SelectItem } from 'primeng/api';
+import { MarcaService } from 'src/app/_service/marca.service';
+import { Marca } from 'src/app/_model/marca';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-bien-edicion',
@@ -27,7 +30,14 @@ export class BienEdicionComponent implements OnInit {
 
   estadou: SelectItem[];
 
-  constructor(private categoriaService: CategoriaService,private builder: FormBuilder) { }
+  marca: Marca;
+  filteredMarcasSingle: Marca[];
+
+
+  edicion: boolean;
+  id: number;
+
+  constructor(private categoriaService: CategoriaService,private builder: FormBuilder,private marcaService: MarcaService,private route: ActivatedRoute) { }
 
   ngOnInit(): void {
 
@@ -38,22 +48,64 @@ export class BienEdicionComponent implements OnInit {
       { label: 'Malogrado', value: 'M' }
     ];
 
-
-
-    //this.listarCateg();
+    /////
     this.form = this.builder.group({
       'id':new FormControl(0),
       'codPatrimonal':new FormControl('',Validators.required),
       'codInterno':new FormControl('',Validators.required),
       'nombre':new FormControl('',Validators.required),
+
       'estadou':new FormControl('',Validators.required),
       'modelo':new FormControl('',Validators.required),
-      'categ':this.myControlCategoria
+      'tipo':new FormControl('',Validators.required),
+      'serie':new FormControl('',Validators.required),
+
+      'dimension':new FormControl('',Validators.required),
+      'color':new FormControl('',Validators.required),
+      'observaciones':new FormControl('',Validators.required),
+      'codLectora':new FormControl('',Validators.required),
+      'estado':new FormControl('',Validators.required), // A
+
+      'categ':this.myControlCategoria,
+      'marcaA':new FormControl('',Validators.required),
     });
 
-    console.log(this.categorias);
+    //console.log(this.categorias);
 
     //this.f
+
+
+    //Obteniendo por ID:
+    this.route.params.subscribe((params: Params) => {
+      this.id = params['id'];
+      this.edicion= this.id != null;
+
+      this.initForm();
+
+    });
+  }
+
+
+  initForm(){
+    /*if(this.edicion){
+      //carga la data del servicio hacia el form.
+      this.bienService.listarxID(this.id).subscribe(data =>{
+        this.form = new FormGroup({
+          'id': new FormControl(data.idPersonal),
+          'nombres': new FormControl(data.nombres),
+          'apellidos': new FormControl(data.apellidos),
+          'celular': new FormControl(data.celular),
+          'fechaNac': new FormControl(new Date(data.fechaNac)),
+          'nroDni': new FormControl(data.dni),
+          'genero': new FormControl(data.genero),
+          'cargo': new FormControl(data.cargo),
+          'modalidad': new FormControl(data.modalidad),
+        });
+        this.selectedCargo.idCargo = data.cargo.idCargo;
+        
+      });
+
+    }*/
   }
 
   
@@ -75,6 +127,25 @@ filterCate(query, categorias: Categoria[]): Categoria[] {
     this.categoria = categorias[i];
     if (this.categoria.nombre.toLowerCase().indexOf(query.toLowerCase()) == 0 || this.categoria.idCategoria == query.toLowerCase()) {
       filtered.push(this.categoria);
+    }
+  }
+  return filtered;
+}
+
+filterMarcaSingle(event) {
+  let query = event.query;
+  this.marcaService.listar().subscribe(marc => {
+    this.filteredMarcasSingle = this.filterMarca(query, marc);
+  });
+}
+filterMarca(query, categorias: Marca[]): Marca[] {
+  //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
+  let filtered: Marca[] = [];
+  for (let i = 0; i < categorias.length; i++) {
+
+    this.marca = categorias[i];
+    if (this.marca.nombre.toLowerCase().indexOf(query.toLowerCase()) == 0 || this.marca.idMarca == query.toLowerCase()) {
+      filtered.push(this.marca);
     }
   }
   return filtered;

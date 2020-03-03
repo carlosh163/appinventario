@@ -6,10 +6,12 @@ export class Bien{
     codPatrimonial: string;
     codInterno: string;
     nombre: string;
+
     estadoUso: CharacterData;
     modelo: string;
     tipo: string;
     serie: string;
+    
     dimension: string;
     color: string;
     observaciones: string;
