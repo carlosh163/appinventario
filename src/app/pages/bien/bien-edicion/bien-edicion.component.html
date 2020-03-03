@@ -1,8 +1,81 @@
-<form [formGroup]="form" (ngSubmit)="operar()">
+<h3 class="first">Ingrese los datos..</h3>
+<form [formGroup]="form" #frmBien="ngForm" (ngSubmit)="operar()">
+    <p-panel header="Datos del Nuevo Bien">
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+            <div class="ui-g-12 ui-md-2" [hidden]="true">
+                <span class="ui-float-label">
+                    <input id="float-inputId" type="text" size="5" pInputText formControlName="id">
+                    <label for="float-inputId" class="labelInput">ID</label>
+                </span>
+            </div>
+
+            <div class="ui-g-12 ui-md-4">
+                <span class="ui-float-label">
+                    <input id="float-inputA" type="text" size="30" pInputText formControlName="codPatrimonal">
+                    <label for="float-inputA" class="labelInput">Codigo Patrimonial</label>
+                </span>
+            </div>
+
+            
+
+
+            <div class="ui-g-12 ui-md-2">
+                <span class="ui-float-label">
+                    <input id="float-inputNr" type="text" size="30" pInputText pKeyFilter="num"
+                        formControlName="codInterno">
+                    <label for="float-inputNr" class="labelInput">Codigo Interno</label>
+                </span>
+            </div>
+
+            <div class="ui-g-12 ui-md-4">
+                <span class="ui-float-label">
+                    <input id="float-inputN" type="text" size="30" pInputText formControlName="nombre">
+                    <label for="float-inputN" class="labelInput" required>Nombre</label>
+                </span>
+            </div>
+
+            <div class="ui-g-12 ui-md-2">
+                <p-dropdown [options]="estadou" formControlName="estadou"></p-dropdown>
+            </div>
+
+            
+            <div class="ui-g-12 ui-md-4">
+                <span class="ui-float-label">
+                    <input id="float-inputM" type="text" size="30" pInputText formControlName="modelo">
+                    <label for="float-inputM" class="labelInput" required>Modelo</label>
+                </span>
+            </div>
+            
+            <div class="ui-g-12 ui-md-2">
+                <p-autoComplete [(ngModel)]="cateSelect" [suggestions]="filteredCategoriasSingle" (completeMethod)="filterCategoriaSingle($event)" field="nombre" [size]="30"
+        placeholder="Categorias (AU)" [minLength]="1" formControlName="categ"></p-autoComplete>
+            </div>
+            
+            
+        </div>
+    </p-panel>
+
+    <div style="text-align: center;margin: 0.2rem 0 0.2rem 0;">
+
+        <button pButton type="submit" label="Guardar" class="ui-button-success" [disabled]="frmBien.invalid"
+            icon="pi pi-save" style="margin-right: 0.5rem;"></button>
+
+        <button pButton type="button" label="Cancelar" class="ui-button-danger" icon="pi pi-times"
+            routerLink='/bien'></button>
+
+    </div>
+
+
+
+</form>
+
+
+
+<!--<form [formGroup]="form" (ngSubmit)="operar()">
     <p-autoComplete [(ngModel)]="cateSelect" [suggestions]="filteredCategoriasSingle" (completeMethod)="filterCategoriaSingle($event)" field="nombre" [size]="30"
         placeholder="Categorias (AU)" [minLength]="1" formControlName="categ"></p-autoComplete>
     <span style="margin-left:10px">Country: {{cateSelect ? cateSelect.nombre||cateSelect : 'none'}}</span>
     
     <button pButton type="submit" label="Guardar" class="ui-button-success"
             icon="pi pi-save" style="margin-right: 0.5rem;"></button>
-    </form>
+    </form>!-->

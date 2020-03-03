@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoriaService } from 'src/app/_service/categoria.service';
 import { Categoria } from 'src/app/_model/categoria';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { SelectItem } from 'primeng/api';
 
 @Component({
   selector: 'app-bien-edicion',
@@ -21,15 +22,33 @@ export class BienEdicionComponent implements OnInit {
 
   form: FormGroup;
 
-  myControlCategoria :FormControl = new FormControl();
+  myControlCategoria :FormControl = new FormControl('',Validators.required);
+
+
+  estadou: SelectItem[];
 
   constructor(private categoriaService: CategoriaService,private builder: FormBuilder) { }
 
   ngOnInit(): void {
+
+    this.estadou = [
+      { label: 'Seleccione un Estado', value: null },
+      { label: 'Operativo', value: 'O' },
+      { label: 'Usado', value: 'U' },
+      { label: 'Malogrado', value: 'M' }
+    ];
+
+
+
     //this.listarCateg();
     this.form = this.builder.group({
-      'categ':this.myControlCategoria,
-      'ds': new FormControl()
+      'id':new FormControl(0),
+      'codPatrimonal':new FormControl('',Validators.required),
+      'codInterno':new FormControl('',Validators.required),
+      'nombre':new FormControl('',Validators.required),
+      'estadou':new FormControl('',Validators.required),
+      'modelo':new FormControl('',Validators.required),
+      'categ':this.myControlCategoria
     });
 
     console.log(this.categorias);
