@@ -5,7 +5,9 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { SelectItem } from 'primeng/api';
 import { MarcaService } from 'src/app/_service/marca.service';
 import { Marca } from 'src/app/_model/marca';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { BienService } from 'src/app/_service/bien.service';
+import { Bien } from 'src/app/_model/bien';
 
 @Component({
   selector: 'app-bien-edicion',
@@ -37,9 +39,15 @@ export class BienEdicionComponent implements OnInit {
   edicion: boolean;
   id: number;
 
-  constructor(private categoriaService: CategoriaService,private builder: FormBuilder,private marcaService: MarcaService,private route: ActivatedRoute) { }
+  colores:SelectItem[];
+
+  bien: Bien;
+
+  constructor(private categoriaService: CategoriaService,private builder: FormBuilder,private marcaService: MarcaService,private route: ActivatedRoute,private bienService: BienService,private router :Router) { }
 
   ngOnInit(): void {
+
+    this.bien = new Bien();
 
     this.estadou = [
       { label: 'Seleccione un Estado', value: null },
@@ -48,10 +56,18 @@ export class BienEdicionComponent implements OnInit {
       { label: 'Malogrado', value: 'M' }
     ];
 
+    this.colores = [
+      { label: 'Seleccione un Color', value: null },
+      { label: 'Negro', value: "NEGRO" },
+      { label: 'Blanco', value: "BLANCO" },
+      { label: 'Amarillo', value: "AMARILLO" },
+      { label: 'Rojo', value: "ROJO" }
+    ];
+
     /////
     this.form = this.builder.group({
       'id':new FormControl(0),
-      'codPatrimonal':new FormControl('',Validators.required),
+      'codPatrimonial':new FormControl('',Validators.required),
       'codInterno':new FormControl('',Validators.required),
       'nombre':new FormControl('',Validators.required),
 
@@ -64,7 +80,7 @@ export class BienEdicionComponent implements OnInit {
       'color':new FormControl('',Validators.required),
       'observaciones':new FormControl('',Validators.required),
       'codLectora':new FormControl('',Validators.required),
-      'estado':new FormControl('',Validators.required), // A
+      'estado':new FormControl('A'), // A
 
       'categ':this.myControlCategoria,
       'marcaA':new FormControl('',Validators.required),
@@ -87,25 +103,34 @@ export class BienEdicionComponent implements OnInit {
 
 
   initForm(){
-    /*if(this.edicion){
+    if(this.edicion){
       //carga la data del servicio hacia el form.
       this.bienService.listarxID(this.id).subscribe(data =>{
         this.form = new FormGroup({
-          'id': new FormControl(data.idPersonal),
-          'nombres': new FormControl(data.nombres),
-          'apellidos': new FormControl(data.apellidos),
-          'celular': new FormControl(data.celular),
-          'fechaNac': new FormControl(new Date(data.fechaNac)),
-          'nroDni': new FormControl(data.dni),
-          'genero': new FormControl(data.genero),
-          'cargo': new FormControl(data.cargo),
-          'modalidad': new FormControl(data.modalidad),
+          'id': new FormControl(data.idBien),
+          'codPatrimonial': new FormControl(data.codPatrimonial),
+          'codInterno': new FormControl(data.codInterno),
+          'nombre': new FormControl(data.nombre),
+
+          'estadou': new FormControl(data.estadoUso),
+          'modelo': new FormControl(data.modelo),
+          'tipo': new FormControl(data.tipo),
+          'serie': new FormControl(data.serie),
+
+          'dimension':new FormControl(data.dimension),
+          'color':new FormControl(data.color),
+          'observaciones':new FormControl(data.observaciones),
+          'codLectora':new FormControl(data.codLectora),
+          'estado':new FormControl(data.estado), // A
+
+          'categ': new FormControl(data.categoria),
+          'marcaA': new FormControl(data.marca),
         });
-        this.selectedCargo.idCargo = data.cargo.idCargo;
+        //this.selectedCargo.idCargo = data.cargo.idCargo;
         
       });
 
-    }*/
+    }
   }
 
   
@@ -194,8 +219,55 @@ miFilter(val: any){
 
 
 
-operar(){
+operarsd(){
   this.categoria=this.form.value['categ'];
+}
+
+operar() {
+  this.bien.idBien = this.form.value['id'];
+  this.bien.codPatrimonial = this.form.value['codPatrimonial'];
+  this.bien.codInterno = this.form.value['codInterno'];
+  this.bien.nombre = this.form.value['nombre'];
+
+
+  this.bien.estadoUso = this.form.value['estadou'];
+  this.bien.modelo = this.form.value['modelo'];
+  this.bien.tipo = this.form.value['tipo'];
+  this.bien.serie = this.form.value['serie'];
+
+
+  this.bien.dimension = this.form.value['dimension'];
+  this.bien.color = this.form.value['color'];
+  this.bien.observaciones = this.form.value['observaciones'];
+  this.bien.codLectora = this.form.value['codLectora'];
+  this.bien.estado = this.form.value['estado'];
+
+  this.bien.categoria = this.form.value['categ'];
+  this.bien.marca = this.form.value['marcaA'];
+  
+  
+
+  if(this.edicion){
+    this.bienService.modificar(this.bien).subscribe( () =>{
+      this.bienService.listar().subscribe(data =>{
+        this.bienService.bienCambio.next(data);
+        this.bienService.mensajeCambio.next('Se Modifico correctamente..');
+      });
+    });
+
+  }else{
+    //insercion
+    this.bienService.registrar(this.bien).subscribe(() =>{
+      this.bienService.listar().subscribe(data =>{
+        this.bienService.bienCambio.next(data);
+        this.bienService.mensajeCambio.next('Se Registro correctamente..');
+      });
+    });
+  }
+
+  this.router.navigate(['bien']);
+  
+
 }
 
 }

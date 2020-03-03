@@ -17,6 +17,7 @@ import {DialogModule} from 'primeng/dialog';
 import {DynamicDialogModule} from 'primeng/dynamicdialog';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {PanelModule} from 'primeng/panel';
+import {InputTextareaModule} from 'primeng/inputtextarea';
 
 @NgModule({
   declarations: [],
@@ -37,7 +38,8 @@ import {PanelModule} from 'primeng/panel';
     DialogModule,
     DynamicDialogModule,
     AutoCompleteModule,
-    PanelModule
+    PanelModule,
+    InputTextareaModule
 
   ],
   exports:[
@@ -55,7 +57,8 @@ import {PanelModule} from 'primeng/panel';
     DialogModule,
     DynamicDialogModule,
     AutoCompleteModule,
-    PanelModule
+    PanelModule,
+    InputTextareaModule
   ]
 })
 export class PrimengModule { }
