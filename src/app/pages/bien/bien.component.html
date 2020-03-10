@@ -46,7 +46,7 @@
 
                     <td>{{bie.codPatrimonial}}</td>
                     <td>{{bie.nombre}}</td>
-                    <td>{{ bie.estadoUso== 'O' ? 'Operativo' : 'Malogrado'}}</td>
+                    <td>{{ bie.estadoUso== 'O' ? 'Operativo': bie.estadoUso=='M' ? 'Malogrado' : bie.estadoUso=='U' ? 'USADO':' - ' }}</td>
                     <td>{{bie.modelo}}</td>
                     <td>{{bie.categoria.nombre}}</td>
                     <td>{{bie.marca.nombre}}</td>

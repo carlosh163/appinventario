@@ -79,8 +79,10 @@ showModalDialog(b: Bien) {
   if(String(this.bienI.estadoUso) == 'O'){
     this.vEDefOpera = "Operativo"
 
-  }else{
+  }else if(String(this.bienI.estadoUso) == 'M'){
     this.vEDefOpera = "Malogrado"
+  }else if(String(this.bienI.estadoUso) == 'U'){
+    this.vEDefOpera = "Usado"
   }
 
   this.catexBien= this.bienI.categoria.nombre;

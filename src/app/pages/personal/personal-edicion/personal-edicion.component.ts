@@ -7,6 +7,7 @@ import { PersonalService } from 'src/app/_service/personal.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Personal } from 'src/app/_model/personal';
 import * as moment from 'moment';
+import { Usuario } from 'src/app/_service/usuario';
 
 @Component({
   selector: 'app-personal-edicion',
@@ -28,6 +29,9 @@ export class PersonalEdicionComponent implements OnInit {
   selectedCargo: Cargo  = new Cargo();
   //valCelular: string;
 
+  usuario: Usuario;
+  currentFileUpload: File;
+
 
   constructor(private cargoService: CargoService,private router :Router,private route: ActivatedRoute,private personalService: PersonalService) {
 
@@ -41,6 +45,7 @@ export class PersonalEdicionComponent implements OnInit {
 
   ngOnInit() {
     this.personal = new Personal();
+    this.usuario = new Usuario();
 
     this.es = {
       firstDayOfWeek: 1,
@@ -68,7 +73,10 @@ export class PersonalEdicionComponent implements OnInit {
       'nroDni': new FormControl('',Validators.compose([Validators.required, Validators.minLength(8),Validators.maxLength(8)])),
       'genero': new FormControl('',Validators.required),
       'cargo': new FormControl('',Validators.required),
-      'modalidad': new FormControl('C')
+      'modalidad': new FormControl('C'),
+
+      'user': new FormControl(''),
+      'password': new FormControl('')
 
     });
 
@@ -115,11 +123,26 @@ export class PersonalEdicionComponent implements OnInit {
     this.personal.dni = this.form.value['nroDni'];
     this.personal.genero = this.form.value['genero'];
     this.personal.modalidad = this.form.value['modalidad'];
+    //Usuario:
+    this.usuario.personal = this.personal;
+    this.usuario.username = this.form.value['user'];
+    this.usuario.password = this.form.value['password'];
+    this.usuario.enabled = true;
     
     let cargo = new Cargo();
     cargo.idCargo = this.selectedCargo.idCargo;
     this.personal.cargo = cargo;
     this.personal.fechaNac = moment(this.form.value['fechaNac']).format('YYYY-MM-DD');//localISOTime;
+
+
+    //Validando si cargo una foto:
+    /*if (this.selectedFiles != null) {
+      this.currentFileUpload = this.selectedFiles.item(0);
+    } else {
+      this.currentFileUpload = new File([""], "blanco");
+    }*/
+
+    this.currentFileUpload = new File([""], "blanco");
 
     if(this.edicion){
       this.personalService.modificar(this.personal).subscribe( () =>{
@@ -131,7 +154,8 @@ export class PersonalEdicionComponent implements OnInit {
 
     }else{
       //insercion
-      this.personalService.registrar(this.personal).subscribe(() =>{
+      console.log(this.usuario);
+      this.personalService.registrar(this.usuario,this.currentFileUpload).subscribe( () => {
         this.personalService.listar().subscribe(data =>{
           this.personalService.personalCambio.next(data);
           this.personalService.mensajeCambio.next('Se Registro correctamente..');

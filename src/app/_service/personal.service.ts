@@ -3,6 +3,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Personal } from '../_model/personal';
 import { Subject } from 'rxjs';
+import { Usuario } from './usuario';
 @Injectable({
   providedIn: 'root'
 })
@@ -21,9 +22,22 @@ export class PersonalService {
     return this.http.get<Personal>(`${this.url}/${idPersonal}`);
   }
 
+  registrar(usuario: Usuario, file?: File) {
+    let formdata: FormData = new FormData();
+    formdata.append('file', file);
+
+    //multipart/form-data
+    const userBlob = new Blob([JSON.stringify(usuario)], { type: "application/json" });
+    formdata.append('usuario', userBlob);
+
+    return this.http.post(`${this.url}`, formdata, {
+      responseType: 'text'
+    });
+  }
+  /*
   registrar(personal: Personal){
     return this.http.post(`${this.url}`,personal);
-  }
+  }*/
   modificar(personal: Personal){
     return this.http.put(`${this.url}`,personal);
   }

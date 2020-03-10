@@ -53,6 +53,21 @@
                 <p-dropdown [options]="cargo" optionLabel="nombre" [(ngModel)]="selectedCargo"
                     placeholder="Seleccione un Cargo" formControlName="cargo"></p-dropdown>
             </div>
+
+
+
+            <div class="ui-g-12 ui-md-4">
+                <span class="ui-float-label">
+                    <input id="float-inputUser" type="text" size="30" pInputText formControlName="user">
+                    <label for="float-inputUser" class="labelInput" required>Usuario:</label>
+                </span>
+            </div>
+            <div class="ui-g-12 ui-md-4">
+                <span class="ui-float-label">
+                    <input id="float-inputPass" size="30" pPassword type="password" formControlName="password">
+                    <label for="float-inputPass" class="labelInput" required>Password</label>
+                </span>
+            </div>
         </div>
     </p-panel>
 
