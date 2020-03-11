@@ -20,5 +20,8 @@ export class UsuarioService {
   listarxID(idUsu: number){
     return this.http.get<Usuario>(`${this.url}/${idUsu}`);
   }
+  eliminar(idUsuario: number){
+    return this.http.delete(`${this.url}/${idUsuario}`);
+  }
 
 }

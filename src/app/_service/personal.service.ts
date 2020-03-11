@@ -52,7 +52,7 @@ export class PersonalService {
       responseType: 'text'
     });
   }
-  eliminar(idPersonal: number){
+  /*eliminar(idPersonal: number){
     return this.http.delete(`${this.url}/${idPersonal}`);
-  }
+  }*/
 }

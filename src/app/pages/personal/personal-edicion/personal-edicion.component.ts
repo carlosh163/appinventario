@@ -78,7 +78,9 @@ export class PersonalEdicionComponent implements OnInit {
     this.form = new FormGroup({
       'id': new FormControl(0),
       'nombres': new FormControl('', Validators.required),
-      'apellidos': new FormControl('', Validators.required),
+      'apelliP': new FormControl('', Validators.required),
+      'apelliM': new FormControl('', Validators.required),
+
       'celular': new FormControl('', Validators.compose([Validators.required, Validators.minLength(9), Validators.maxLength(9)])),
       'fechaNac': new FormControl('', Validators.required),
       'nroDni': new FormControl('', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(8)])),
@@ -112,7 +114,8 @@ export class PersonalEdicionComponent implements OnInit {
         this.form = new FormGroup({
           'id': new FormControl(data.idPersonal),
           'nombres': new FormControl(data.nombres),
-          'apellidos': new FormControl(data.apellidos),
+          'apelliP': new FormControl(data.apelliPaterno),
+          'apelliM': new FormControl(data.apelliMaterno),
           'celular': new FormControl(data.celular),
           'fechaNac': new FormControl(new Date(data.fechaNac)),
           'nroDni': new FormControl(data.dni),
@@ -153,7 +156,8 @@ export class PersonalEdicionComponent implements OnInit {
   operar() {
 
     this.personal.nombres = this.form.value['nombres'];
-    this.personal.apellidos = this.form.value['apellidos'];
+    this.personal.apelliPaterno = this.form.value['apelliP'];
+    this.personal.apelliMaterno = this.form.value['apelliM'];
     this.personal.celular = this.form.value['celular'];
     this.personal.dni = this.form.value['nroDni'];
     this.personal.genero = this.form.value['genero'];
@@ -168,7 +172,7 @@ export class PersonalEdicionComponent implements OnInit {
 
     //Usuario:Noemi Jaime Durand: njaime
 
-    this.usuario.username = this.form.value['nombres'].substr(0, 1) + this.form.value['apellidos'];
+    this.usuario.username = this.form.value['nombres'].substr(0, 1) + this.form.value['apelliP'];
     this.usuario.password = this.form.value['password'];
     this.usuario.enabled = true;
 
@@ -185,15 +189,15 @@ export class PersonalEdicionComponent implements OnInit {
       this.personal.idPersonal = this.form.value['id'];
       this.usuario.idUsuario = this.personal.idPersonal;
 
-      if(this.form.value['password'] == null){
-        console.log('pasV');
-        //que se registre la misma pass que estaba.
-        //
-
-      }
-
       //this.usuario.personal = this.personal;
+      
       this.userService.listarxID(this.form.value['id']).subscribe( data =>{
+
+
+        if(this.usuario.password == ""){
+          this.usuario.password = data.password;
+        }
+
         this.usuario.roles = data.roles;
 
         this.userService.modificar(this.usuario).subscribe(() => {
@@ -214,7 +218,7 @@ export class PersonalEdicionComponent implements OnInit {
     } else {
       //insercion
       this.usuario.personal = this.personal;
-      console.log(this.usuario);
+      //console.log(this.usuario);
       this.personalService.registrar(this.usuario, this.currentFileUpload).subscribe(() => {
         this.personalService.listar().subscribe(data => {
           this.personalService.personalCambio.next(data);

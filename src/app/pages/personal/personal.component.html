@@ -25,7 +25,7 @@
                     <th *ngFor="let col of columns" [ngSwitch]="col.field">
                         <input *ngSwitchCase="'nombres'" pInputText type="text" size="10"
                             (input)="dt.filter($event.target.value, col.field, 'contains')">
-                        <input *ngSwitchCase="'apellidos'" pInputText type="text" size="10"
+                        <input *ngSwitchCase="'apelliPaterno'" pInputText type="text" size="10"
                             (input)="dt.filter($event.target.value, col.field, 'contains')">
                         <input *ngSwitchCase="'cargo.nombre'" pInputText type="text" size="10"
                             (input)="dt.filter($event.target.value, col.field, 'contains')">
@@ -43,7 +43,7 @@
 
                     <td style="text-align: center;">{{perso.idPersonal}}</td>
                     <td>{{perso.nombres}}</td>
-                    <td>{{perso.apellidos}}</td>
+                    <td>{{perso.apelliPaterno  }} {{perso.apelliMaterno  }}</td>
                     <td>{{perso.fechaNac | date:'dd-MM-yyyy'}}</td>
                     <td>{{perso.dni}}</td>
                     <td>{{ perso.genero== 'M' ? 'Masculino' : 'Femenino'}}</td>

@@ -3,7 +3,8 @@ import { Cargo } from './cargo';
 export class Personal{
     idPersonal: number;
     nombres: string;
-    apellidos: string;
+    apelliPaterno: string;
+    apelliMaterno: string;
     fechaNac: string;
     dni: string;
     //foto: any;
