@@ -7,7 +7,11 @@ import { PersonalService } from 'src/app/_service/personal.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Personal } from 'src/app/_model/personal';
 import * as moment from 'moment';
-import { Usuario } from 'src/app/_service/usuario';
+import { Usuario } from 'src/app/_model/usuario';
+import { DomSanitizer } from '@angular/platform-browser';
+import { UsuarioService } from 'src/app/_service/usuario.service';
+
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-personal-edicion',
@@ -26,14 +30,21 @@ export class PersonalEdicionComponent implements OnInit {
   id: number;
 
   personal: Personal;
-  selectedCargo: Cargo  = new Cargo();
+  selectedCargo: Cargo = new Cargo();
   //valCelular: string;
 
   usuario: Usuario;
+
   currentFileUpload: File;
+  labelFile: string;
+  selectedFiles: FileList;
+
+  imagenData: any;
+  imagenEstado: boolean = false;
 
 
-  constructor(private cargoService: CargoService,private router :Router,private route: ActivatedRoute,private personalService: PersonalService) {
+  constructor(private cargoService: CargoService, private router: Router, private route: ActivatedRoute,
+    private personalService: PersonalService, private sanitization: DomSanitizer, private userService: UsuarioService) {
 
     this.genero = [
       { label: 'Seleccione un Genero', value: null },
@@ -66,26 +77,26 @@ export class PersonalEdicionComponent implements OnInit {
 
     this.form = new FormGroup({
       'id': new FormControl(0),
-      'nombres': new FormControl('',Validators.required),
-      'apellidos': new FormControl('',Validators.required),
-      'celular': new FormControl('',Validators.compose([Validators.required, Validators.minLength(9),Validators.maxLength(9)])),
-      'fechaNac': new FormControl('',Validators.required),
-      'nroDni': new FormControl('',Validators.compose([Validators.required, Validators.minLength(8),Validators.maxLength(8)])),
-      'genero': new FormControl('',Validators.required),
-      'cargo': new FormControl('',Validators.required),
+      'nombres': new FormControl('', Validators.required),
+      'apellidos': new FormControl('', Validators.required),
+      'celular': new FormControl('', Validators.compose([Validators.required, Validators.minLength(9), Validators.maxLength(9)])),
+      'fechaNac': new FormControl('', Validators.required),
+      'nroDni': new FormControl('', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(8)])),
+      'genero': new FormControl('', Validators.required),
+      'cargo': new FormControl('', Validators.required),
       'modalidad': new FormControl('C'),
 
-      'user': new FormControl(''),
-      'password': new FormControl('')
+      'password': new FormControl(''),
 
     });
 
     //Obteniendo por ID:
     this.route.params.subscribe((params: Params) => {
       this.id = params['id'];
-      this.edicion= this.id != null;
+      this.edicion = this.id != null;
 
       this.initForm();
+
 
     });
 
@@ -93,10 +104,11 @@ export class PersonalEdicionComponent implements OnInit {
 
   }
 
-  initForm(){
-    if(this.edicion){
+
+  initForm() {
+    if (this.edicion) {
       //carga la data del servicio hacia el form.
-      this.personalService.listarxID(this.id).subscribe(data =>{
+      this.personalService.listarxID(this.id).subscribe(data => {
         this.form = new FormGroup({
           'id': new FormControl(data.idPersonal),
           'nombres': new FormControl(data.nombres),
@@ -107,56 +119,104 @@ export class PersonalEdicionComponent implements OnInit {
           'genero': new FormControl(data.genero),
           'cargo': new FormControl(data.cargo),
           'modalidad': new FormControl(data.modalidad),
+
+          'password': new FormControl(''),
         });
         this.selectedCargo.idCargo = data.cargo.idCargo;
-        
+
+        this.personalService.listarxIDF(this.id).subscribe(data => {
+          if (data.size > 0) {
+            this.convertir(data);
+          }
+        });
+
+
       });
 
     }
   }
 
+  convertir(data: any) {
+    let reader = new FileReader();
+    reader.readAsDataURL(data);
+    reader.onloadend = () => {
+      let base64 = reader.result;
+      this.imagenData = base64;
+      this.setear(base64);
+    }
+  }
+  setear(base64: any) {
+    this.imagenData = this.sanitization.bypassSecurityTrustResourceUrl(base64);
+    this.imagenEstado = true;
+  }
+
   operar() {
-    this.personal.idPersonal = this.form.value['id'];
+
     this.personal.nombres = this.form.value['nombres'];
     this.personal.apellidos = this.form.value['apellidos'];
     this.personal.celular = this.form.value['celular'];
     this.personal.dni = this.form.value['nroDni'];
     this.personal.genero = this.form.value['genero'];
     this.personal.modalidad = this.form.value['modalidad'];
-    //Usuario:
-    this.usuario.personal = this.personal;
-    this.usuario.username = this.form.value['user'];
-    this.usuario.password = this.form.value['password'];
-    this.usuario.enabled = true;
-    
+
+
+
     let cargo = new Cargo();
     cargo.idCargo = this.selectedCargo.idCargo;
     this.personal.cargo = cargo;
     this.personal.fechaNac = moment(this.form.value['fechaNac']).format('YYYY-MM-DD');//localISOTime;
 
+    //Usuario:Noemi Jaime Durand: njaime
+
+    this.usuario.username = this.form.value['nombres'].substr(0, 1) + this.form.value['apellidos'];
+    this.usuario.password = this.form.value['password'];
+    this.usuario.enabled = true;
+
 
     //Validando si cargo una foto:
-    /*if (this.selectedFiles != null) {
+    if (this.selectedFiles != null) {
       this.currentFileUpload = this.selectedFiles.item(0);
     } else {
       this.currentFileUpload = new File([""], "blanco");
-    }*/
+    }
 
-    this.currentFileUpload = new File([""], "blanco");
+    if (this.edicion) {
 
-    if(this.edicion){
-      this.personalService.modificar(this.personal).subscribe( () =>{
-        this.personalService.listar().subscribe(data =>{
-          this.personalService.personalCambio.next(data);
-          this.personalService.mensajeCambio.next('Se Modifico correctamente..');
+      this.personal.idPersonal = this.form.value['id'];
+      this.usuario.idUsuario = this.personal.idPersonal;
+
+      if(this.form.value['password'] == null){
+        console.log('pasV');
+        //que se registre la misma pass que estaba.
+        //
+
+      }
+
+      //this.usuario.personal = this.personal;
+      this.userService.listarxID(this.form.value['id']).subscribe( data =>{
+        this.usuario.roles = data.roles;
+
+        this.userService.modificar(this.usuario).subscribe(() => {
+          this.personalService.modificar(this.personal, this.currentFileUpload).pipe(switchMap(() => {
+            return this.personalService.listar();
+          })).subscribe(data => {
+            this.personalService.personalCambio.next(data);
+            this.personalService.mensajeCambio.next('Se Modifico correctamente..');
+          });
         });
       });
+      
 
-    }else{
+      
+
+      
+
+    } else {
       //insercion
+      this.usuario.personal = this.personal;
       console.log(this.usuario);
-      this.personalService.registrar(this.usuario,this.currentFileUpload).subscribe( () => {
-        this.personalService.listar().subscribe(data =>{
+      this.personalService.registrar(this.usuario, this.currentFileUpload).subscribe(() => {
+        this.personalService.listar().subscribe(data => {
           this.personalService.personalCambio.next(data);
           this.personalService.mensajeCambio.next('Se Registro correctamente..');
         });
@@ -164,8 +224,20 @@ export class PersonalEdicionComponent implements OnInit {
     }
 
     this.router.navigate(['personal']);
-    
 
+
+  }
+
+  selectFile(e: any) {
+    this.labelFile = e.target.files[0].name;
+    this.selectedFiles = e.target.files;
+
+    this.convertir(e.target.files[0]);
+  }
+
+  onBasicUpload(event) {
+    console.log(event);
+    this.personalService.mensajeCambio.next('File Uploaded with Basic Mode');
   }
 
 }

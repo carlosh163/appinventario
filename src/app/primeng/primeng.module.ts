@@ -19,6 +19,7 @@ import {AutoCompleteModule} from 'primeng/autocomplete';
 import {PanelModule} from 'primeng/panel';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import {PasswordModule} from 'primeng/password';
+import {FileUploadModule} from 'primeng/fileupload';
 
 @NgModule({
   declarations: [],
@@ -41,7 +42,8 @@ import {PasswordModule} from 'primeng/password';
     AutoCompleteModule,
     PanelModule,
     InputTextareaModule,
-    PasswordModule
+    PasswordModule,
+    FileUploadModule
 
   ],
   exports:[
@@ -61,7 +63,8 @@ import {PasswordModule} from 'primeng/password';
     AutoCompleteModule,
     PanelModule,
     InputTextareaModule,
-    PasswordModule
+    PasswordModule,
+    FileUploadModule
   ]
 })
 export class PrimengModule { }

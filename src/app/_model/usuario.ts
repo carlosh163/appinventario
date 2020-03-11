@@ -1,4 +1,5 @@
-import { Personal } from '../_model/personal';
+import { Personal } from './personal';
+import { Rol } from './rol';
 
 export class Usuario{
     idUsuario: number;
@@ -6,4 +7,6 @@ export class Usuario{
     username: string;
     password: string;
     enabled: boolean;
+
+    roles:Rol[];
 }

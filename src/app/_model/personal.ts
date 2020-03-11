@@ -6,6 +6,7 @@ export class Personal{
     apellidos: string;
     fechaNac: string;
     dni: string;
+    //foto: any;
     celular: number;
     genero: CharacterData;
     modalidad: CharacterData;

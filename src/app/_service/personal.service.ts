@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Personal } from '../_model/personal';
 import { Subject } from 'rxjs';
-import { Usuario } from './usuario';
+import { Usuario } from '../_model/usuario';
 @Injectable({
   providedIn: 'root'
 })
@@ -22,6 +22,12 @@ export class PersonalService {
     return this.http.get<Personal>(`${this.url}/${idPersonal}`);
   }
 
+  listarxIDF(idPersonal: number){
+    return this.http.get(`${this.url}/f/${idPersonal}`, {
+      responseType: 'blob'
+    });
+  }
+
   registrar(usuario: Usuario, file?: File) {
     let formdata: FormData = new FormData();
     formdata.append('file', file);
@@ -34,12 +40,17 @@ export class PersonalService {
       responseType: 'text'
     });
   }
-  /*
-  registrar(personal: Personal){
-    return this.http.post(`${this.url}`,personal);
-  }*/
-  modificar(personal: Personal){
-    return this.http.put(`${this.url}`,personal);
+  modificar(personal: Personal, file?: File) {
+    let formdata: FormData = new FormData();
+    formdata.append('file', file);
+
+    //multipart/form-data
+    const userBlob = new Blob([JSON.stringify(personal)], { type: "application/json" });
+    formdata.append('personal', userBlob);
+
+    return this.http.put(`${this.url}`, formdata, {
+      responseType: 'text'
+    });
   }
   eliminar(idPersonal: number){
     return this.http.delete(`${this.url}/${idPersonal}`);
