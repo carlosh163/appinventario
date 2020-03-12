@@ -1,4 +1,6 @@
 <h3 class="first">Ingrese los datos..</h3>
+
+
 <form [formGroup]="form" #frmPersonal="ngForm" (ngSubmit)="operar()">
     <p-panel header="Datos del Nuevo Personal">
         <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
@@ -14,21 +16,18 @@
                     <label for="float-inputN" class="labelInput" required>Nombres</label>
                 </span>
             </div>
-
             <div class="ui-g-12 ui-md-3">
                 <span class="ui-float-label">
                     <input id="float-inputAP" type="text" size="30" pInputText formControlName="apelliP">
                     <label for="float-inputAP" class="labelInput">Apellido Paterno</label>
                 </span>
             </div>
-
             <div class="ui-g-12 ui-md-3">
                 <span class="ui-float-label">
                     <input id="float-inputAM" type="text" size="30" pInputText formControlName="apelliM">
                     <label for="float-inputAM" class="labelInput">Apellido Materno</label>
                 </span>
             </div>
-
             <div class="ui-g-12 ui-md-3">
                 <span class="ui-float-label">
                     <input id="float-inputC" type="text" size="30" pInputText pKeyFilter="num"
@@ -36,7 +35,8 @@
                     <label for="float-inputC" class="labelInput">Celular</label>
                 </span>
             </div>
-            <div class="ui-g-12 ui-md-4">
+
+            <div class="ui-g-12 ui-md-2">
                 <span class="ui-float-label">
                     <p-calendar [(ngModel)]="value" [locale]="es" dateFormat="dd/mm/yy" [showIcon]="true"
                         formControlName="fechaNac"> </p-calendar>
@@ -54,29 +54,38 @@
             <div class="ui-g-12 ui-md-2">
                 <p-dropdown [options]="genero" formControlName="genero"></p-dropdown>
             </div>
-            <div class="ui-g-12 ui-md-2" [hidden]="true">
+            <div [hidden]="true">
                 <input id="float-inputs" type="text" size="2" pInputText formControlName="modalidad">
             </div>
-            <div class="ui-g-12 ui-md-4">
+            <div class="ui-g-12 ui-md-3">
                 <p-dropdown [options]="cargo" optionLabel="nombre" [(ngModel)]="selectedCargo"
                     placeholder="Seleccione un Cargo" formControlName="cargo"></p-dropdown>
             </div>
-            
+
             <div class="ui-g-12 ui-md-3">
                 <span class="ui-float-label">
                     <input id="float-inputPass" size="30" pPassword type="password" formControlName="password">
                     <label for="float-inputPass" class="labelInput" required>Password</label>
                 </span>
             </div>
-            <div class="ui-g-12 ui-md-3">
+
+
+            <div class="ui-g-12 ui-md-2">
                 <button pButton class="ui-button-success" type="button" icon="pi pi-upload"
                     onclick="document.getElementById('fileToUpload').click()" label="Seleccionar foto"></button>
                 <input id="fileToUpload" type="file" (change)="selectFile($event)" style="display:none;">
             </div>
             <div class="ui-g-12 ui-md-4">
-                <img [src]="imagenData" *ngIf="imagenEstado" width="40%" height="40%"/>
+                <img [src]="imagenData" *ngIf="imagenEstado" width="40%" height="40%" />
                 <p style="font-weight: bold;">{{labelFile}}</p>
             </div>
+            
+
+            <div class="ui-g-12 ui-md-3" style="display: flex;justify-content: center;">
+                <label>Seleccione Roles:</label>
+                <i class="pi pi-users" (mouseenter)="op2.show($event)" style="font-size:28px"></i>
+            </div>
+
         </div>
     </p-panel>
 
@@ -93,3 +102,20 @@
 
 
 </form>
+<p-overlayPanel #op2 [showCloseIcon]="true" [dismissable]="false">
+    <div *ngIf="edicion">
+        <p-panel header="Roles del Usuario">
+
+            <div *ngFor="let r of listRoles">
+                <div class="ui-g" style="width:250px;margin-bottom:10px">
+                    <div class="ui-g-12">
+                        <p-checkbox name="group2" [value]="r.idRol" [label]="r.descripcion" [(ngModel)]="selectedRolesF"
+                            inputId="technology"></p-checkbox>
+                    </div>
+                </div>
+            </div>
+
+
+        </p-panel>
+    </div>
+</p-overlayPanel>

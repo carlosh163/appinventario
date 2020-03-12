@@ -12,6 +12,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { UsuarioService } from 'src/app/_service/usuario.service';
 
 import { switchMap } from 'rxjs/operators';
+import { RolService } from 'src/app/_service/rol.service';
+import { Rol } from 'src/app/_model/rol';
 
 @Component({
   selector: 'app-personal-edicion',
@@ -42,15 +44,39 @@ export class PersonalEdicionComponent implements OnInit {
   imagenData: any;
   imagenEstado: boolean = false;
 
+  selectedRolesd: string[] = ['USER', 'v2']
+
+
+
+  /*selectedRoles: Rol[] = [
+    {idRol:1,nombre:"ADMIN",descripcion:"Administrador"},
+    {idRol:2,nombre:"USER",descripcion:"Usuario"},
+   
+  ];*/
+
+
+
+  listRoles: Rol[];
+
+  //selectedRolesF :Rol[] = [];
+
+  selectedRolesF: number[] = [];
+
+  listSelectRoles: Rol[] = [];
+
 
   constructor(private cargoService: CargoService, private router: Router, private route: ActivatedRoute,
-    private personalService: PersonalService, private sanitization: DomSanitizer, private userService: UsuarioService) {
+    private personalService: PersonalService, private sanitization: DomSanitizer, private userService: UsuarioService, private rolService: RolService) {
 
     this.genero = [
       { label: 'Seleccione un Genero', value: null },
       { label: 'Masculino', value: 'M' },
       { label: 'Femenino', value: 'F' }
     ];
+
+
+
+
 
   }
 
@@ -102,8 +128,6 @@ export class PersonalEdicionComponent implements OnInit {
 
     });
 
-
-
   }
 
 
@@ -133,7 +157,23 @@ export class PersonalEdicionComponent implements OnInit {
           }
         });
 
+        //cargando lista de checks : Roles:
+        this.rolService.listar().subscribe(data => {
+          this.listRoles = data;
+        });
 
+
+      });
+
+
+      //enviando roles que le pertenecen:
+      this.userService.listarxID(this.id).subscribe(data => {
+        data.roles.forEach(d => {
+          this.selectedRolesF.push(d.idRol);
+        });
+
+        //this.selectedRolesF = data.roles;
+        
       });
 
     }
@@ -190,15 +230,27 @@ export class PersonalEdicionComponent implements OnInit {
       this.usuario.idUsuario = this.personal.idPersonal;
 
       //this.usuario.personal = this.personal;
-      
-      this.userService.listarxID(this.form.value['id']).subscribe( data =>{
+
+      this.userService.listarxID(this.form.value['id']).subscribe(data => {
 
 
-        if(this.usuario.password == ""){
+        if (this.usuario.password == "") {
           this.usuario.password = data.password;
         }
+        //console.log(this.selectedRolesF);
+        
+        this.selectedRolesF.forEach(i =>{
+          let rolS = new Rol();
+          rolS.idRol = i;
+          this.listSelectRoles.push(rolS);
+        })
 
-        this.usuario.roles = data.roles;
+        
+
+        this.usuario.roles = this.listSelectRoles;
+        console.log(this.usuario.roles)
+
+        //this.usuario.roles = data.roles;
 
         this.userService.modificar(this.usuario).subscribe(() => {
           this.personalService.modificar(this.personal, this.currentFileUpload).pipe(switchMap(() => {
@@ -208,12 +260,10 @@ export class PersonalEdicionComponent implements OnInit {
             this.personalService.mensajeCambio.next('Se Modifico correctamente..');
           });
         });
+
       });
-      
 
-      
 
-      
 
     } else {
       //insercion

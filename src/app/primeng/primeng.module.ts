@@ -20,6 +20,8 @@ import {PanelModule} from 'primeng/panel';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import {PasswordModule} from 'primeng/password';
 import {FileUploadModule} from 'primeng/fileupload';
+import {CheckboxModule} from 'primeng/checkbox';
+import {OverlayPanelModule} from 'primeng/overlaypanel';
 
 @NgModule({
   declarations: [],
@@ -43,7 +45,9 @@ import {FileUploadModule} from 'primeng/fileupload';
     PanelModule,
     InputTextareaModule,
     PasswordModule,
-    FileUploadModule
+    FileUploadModule,
+    CheckboxModule,
+    OverlayPanelModule
 
   ],
   exports:[
@@ -64,7 +68,9 @@ import {FileUploadModule} from 'primeng/fileupload';
     PanelModule,
     InputTextareaModule,
     PasswordModule,
-    FileUploadModule
+    FileUploadModule,
+    CheckboxModule,
+    OverlayPanelModule
   ]
 })
 export class PrimengModule { }
